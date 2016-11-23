@@ -1,7 +1,9 @@
 # SwiftyAlert
+[This is supported Swift 3.0]
+it's forked of simorgh3196/SwiftyAlert.
+
 Simple UIAlertController and UIAlertView wrapper.
 Enable to use Swifty.
-
 
 ## Installation and Setup
 
