@@ -7,7 +7,7 @@ Enable to use Swifty.
 
 ### Installing with Carthage
 ```
-github "simorgh3196/SwiftyAlert"
+github "justinlee/SwiftyAlert"
 ```
 
 ### Installing with CocoaPods
@@ -16,7 +16,7 @@ To integrate SwiftyAlert into your Xcode project using CocoaPods, specify it in 
 ```
 platform :ios, '8.0'
 use_frameworks!
-pod "SwiftyAlert", '~>1.0.0'
+pod 'SwiftyAlert', :git => 'https://github.com/justinlee/SwiftyAlert.git'
 ```
 
 ### Manual Installation
