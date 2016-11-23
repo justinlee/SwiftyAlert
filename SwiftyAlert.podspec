@@ -16,8 +16,8 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "SwiftyAlert"
-  s.version      = "1.0.0"
-  s.summary      = "Simple UIAlertController and UIAlertView wrapper."
+  s.version      = "1.0.1"
+  s.summary      = "[swift 3.0] Simple UIAlertController and UIAlertView wrapper."
 
   # This description is used to generate tags and improve search results.
   #   * Think: What does it do? Why did you write it? What is the focus?
@@ -28,7 +28,8 @@ Pod::Spec.new do |s|
                    Swifty UIAlertController
                    DESC
 
-  s.homepage     = "https://github.com/simorgh3196/SwiftyAlert"
+  #s.homepage     = "https://github.com/simorgh3196/SwiftyAlert"
+  s.homepage     = "https://github.com/justinlee/SwiftyAlert"
   # s.screenshots  = "www.example.com/screenshots_1.gif", "www.example.com/screenshots_2.gif"
 
 
@@ -80,7 +81,7 @@ Pod::Spec.new do |s|
   #  Supports git, hg, bzr, svn and HTTP.
   #
 
-  s.source       = { :git => "https://github.com/simorgh3196/SwiftyAlert.git", :tag => "v1.0.0" }
+  s.source       = { :git => "https://github.com/justinlee/SwiftyAlert.git", :tag => "v1.0.1" }
 
 
   # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #

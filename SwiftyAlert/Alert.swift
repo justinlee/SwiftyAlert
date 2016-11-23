@@ -25,15 +25,15 @@
 import UIKit
 
 
-public class Alert {
+open class Alert {
     
-    static public var okButtonTitle = "OK"
-    static public var cancelButtonTitle = "Cancel"
+    static open var okButtonTitle = "OK"
+    static open var cancelButtonTitle = "Cancel"
     
-    public var controller: UIAlertController
-    public var textFieldHandler: ((UITextField, Int) -> Void)?
+    open var controller: UIAlertController
+    open var textFieldHandler: ((UITextField, Int) -> Void)?
     
-    private var disposeBag: Alert?
+    fileprivate var disposeBag: Alert?
     
     /**
      initializer
@@ -42,7 +42,7 @@ public class Alert {
      - parameter message : Alert message
      - parameter style   : UIAlertControllerStyle. Default is .Alert.
      */
-    public init(title: String, message: String = "", style: UIAlertControllerStyle = .Alert) {
+    public init(title: String, message: String = "", style: UIAlertControllerStyle = .alert) {
         controller = UIAlertController(title: title, message: message, preferredStyle: style)
     }
     
@@ -57,21 +57,8 @@ public class Alert {
      - parameter action : Called when button selected. Default is nil.
      - returns          : Alert
      */
-    public func addOk(action: (() -> Void)? = nil) -> Alert {
-        controller.addAction(UIAlertAction(title: Alert.okButtonTitle, style: .Default) {_ in action?() })
-        return self
-    }
-
-    /**
-     Add default type button and action to UIAlertController.
-     - Return Alert, so you can use method chain.
-     
-     - parameter title  : Button title.
-     - parameter action : Called when button selected. Default is nil.
-     - returns          : Alert
-     */
-    public func addDefault(title: String, action: (() -> Void)? = nil) -> Alert {
-        controller.addAction(UIAlertAction(title: title, style: .Default) {_ in action?() })
+    open func addOk(_ action: (() -> Void)? = nil) -> Alert {
+        controller.addAction(UIAlertAction(title: Alert.okButtonTitle, style: .default) {_ in action?() })
         return self
     }
     
@@ -83,12 +70,25 @@ public class Alert {
      - parameter action : Called when button selected. Default is nil.
      - returns          : Alert
      */
-    public func addDefaultWithTextField(title: String,
-                                        action: (([UITextField]?) -> Void)? = nil) -> Alert {
-        controller.addAction(UIAlertAction(title: title, style: .Default) { [weak self] _ in
+    open func addDefault(_ title: String, action: (() -> Void)? = nil) -> Alert {
+        controller.addAction(UIAlertAction(title: title, style: .default) {_ in action?() })
+        return self
+    }
+    
+    /**
+     Add default type button and action to UIAlertController.
+     - Return Alert, so you can use method chain.
+     
+     - parameter title  : Button title.
+     - parameter action : Called when button selected. Default is nil.
+     - returns          : Alert
+     */
+    open func addDefaultWithTextField(_ title: String,
+                                      action: (([UITextField]?) -> Void)? = nil) -> Alert {
+        controller.addAction(UIAlertAction(title: title, style: .default) { [weak self] _ in
             action?(self?.controller.textFields)
             self?.disposeBag = nil
-            })
+        })
         disposeBag = disposeBag ?? self
         return self
     }
@@ -101,8 +101,8 @@ public class Alert {
      - parameter action : Called when button selected. Default is nil.
      - returns          : Alert
      */
-    public func addDestructive(title: String, action: (() -> Void)? = nil) -> Alert {
-        controller.addAction(UIAlertAction(title: title, style: .Destructive) {_ in action?() })
+    open func addDestructive(_ title: String, action: (() -> Void)? = nil) -> Alert {
+        controller.addAction(UIAlertAction(title: title, style: .destructive) {_ in action?() })
         return self
     }
     
@@ -114,12 +114,12 @@ public class Alert {
      - parameter action : Called when button selected. Default is nil.
      - returns          : Alert
      */
-    public func addDestructiveWithTextField(title: String,
-                                            action: (([UITextField]?) -> Void)? = nil) -> Alert {
-        controller.addAction(UIAlertAction(title: title, style: .Destructive) { [weak self] _ in
+    open func addDestructiveWithTextField(_ title: String,
+                                          action: (([UITextField]?) -> Void)? = nil) -> Alert {
+        controller.addAction(UIAlertAction(title: title, style: .destructive) { [weak self] _ in
             action?(self?.controller.textFields)
             self?.disposeBag = nil
-            })
+        })
         disposeBag = disposeBag ?? self
         return self
     }
@@ -134,8 +134,8 @@ public class Alert {
      - parameter action : Called when button selected. default is nil.
      - returns          : Alert
      */
-    public func addCancel(title: String = Alert.cancelButtonTitle, action: (() -> Void)? = nil) -> Alert {
-        controller.addAction(UIAlertAction(title: title, style: .Cancel) {_ in action?() })
+    open func addCancel(_ title: String = Alert.cancelButtonTitle, action: (() -> Void)? = nil) -> Alert {
+        controller.addAction(UIAlertAction(title: title, style: .cancel) {_ in action?() })
         return self
     }
     
@@ -149,12 +149,12 @@ public class Alert {
      - parameter action : Called when button selected. Default is nil.
      - returns          : Alert
      */
-    public func addCancelWithTextField(title: String = Alert.cancelButtonTitle,
-                                       action: (([UITextField]?) -> Void)? = nil) -> Alert {
-        controller.addAction(UIAlertAction(title: title, style: .Cancel) { [weak self] _ in
+    open func addCancelWithTextField(_ title: String = Alert.cancelButtonTitle,
+                                     action: (([UITextField]?) -> Void)? = nil) -> Alert {
+        controller.addAction(UIAlertAction(title: title, style: .cancel) { [weak self] _ in
             action?(self?.controller.textFields)
             self?.disposeBag = nil
-            })
+        })
         disposeBag = disposeBag ?? self
         return self
     }
@@ -166,14 +166,14 @@ public class Alert {
      - parameter handle : Configure UITextField.
      - returns          : Alert
      */
-    public func addTextField(handler: ((UITextField) -> Void)) -> Alert {
-        controller.addTextFieldWithConfigurationHandler { [weak self] textField in
+    open func addTextField(_ handler: @escaping ((UITextField) -> Void)) -> Alert {
+        controller.addTextField { [weak self] textField in
             guard let `self` = self else { return }
             handler(textField)
-            NSNotificationCenter.defaultCenter().addObserver(self,
-                selector: #selector(self.textFieldDidChange(_:)),
-                name: UITextFieldTextDidChangeNotification,
-                object: textField)
+            NotificationCenter.default.addObserver(self,
+                                                   selector: #selector(self.textFieldDidChange(_:)),
+                                                   name: NSNotification.Name.UITextFieldTextDidChange,
+                                                   object: textField)
         }
         return self
     }
@@ -184,7 +184,7 @@ public class Alert {
      - parameter handler: UITextField, Index of textFields
      - returns: Alert
      */
-    public func handleTextFieldDidChange(handler: (UITextField, Int) -> ()) -> Alert {
+    open func handleTextFieldDidChange(_ handler: @escaping (UITextField, Int) -> ()) -> Alert {
         textFieldHandler = handler
         return self
     }
@@ -197,11 +197,11 @@ public class Alert {
      - parameter handler : (UIPopoverPresentationController?) -> Void
      - returns           : Alert
      */
-    public func handlePopoverController(handler: (UIPopoverPresentationController?) -> Void) -> Alert {
+    open func handlePopoverController(_ handler: (UIPopoverPresentationController?) -> Void) -> Alert {
         handler(controller.popoverPresentationController)
         return self
     }
-
+    
     /**
      Present UIAlertController to View.
      
@@ -209,20 +209,20 @@ public class Alert {
      - parameter animated   : If you wont to no animation, set this false. default is true.
      - parameter completion : Called when did show UIAlertController.
      */
-    public func show(target: UIViewController, animated: Bool = true, completion: (() -> Void)? = nil) -> Alert {
-        target.presentViewController(controller, animated: animated, completion: completion)
+    open func show(_ target: UIViewController, animated: Bool = true, completion: (() -> Void)? = nil) -> Alert {
+        target.present(controller, animated: animated, completion: completion)
         return self
     }
     
-    private dynamic func textFieldDidChange(notification: NSNotification) {
+    fileprivate dynamic func textFieldDidChange(_ notification: Notification) {
         guard let textField = notification.object as? UITextField
-            , let index = controller.textFields?.indexOf(textField) else {
+            , let index = controller.textFields?.index(of: textField) else {
                 return
         }
         textFieldHandler?(textField, index)
     }
     
     deinit {
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+        NotificationCenter.default.removeObserver(self)
     }
 }
